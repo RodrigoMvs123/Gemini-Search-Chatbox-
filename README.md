@@ -80,25 +80,36 @@ For the Vite development server to expose the key to the application, it **must*
 
 ---
 
-## Deployment to Render
+## Deployment to GitHub Pages
 
-This project is designed to be deployed on [Render](https://render.com/), which can host both the static frontend and the Node.js backend server.
+This project can be easily deployed as a static site using GitHub Pages.
 
 ### Steps to Deploy
 
-1.  Push your code to a GitHub repository.
-2.  Go to the Render Dashboard and create a new **Web Service**.
-3.  Connect the GitHub repository for this project.
-4.  Configure the service with the following settings:
-    -   **Build Command**: `npm install && npm run build`
-    -   **Start Command**: `npm start`
-5.  Go to the **Environment** tab and add a new Environment Variable:
-    -   **Key**: `GEMINI_API_KEY`
-    -   **Value**: Paste your actual Gemini API key here.
-6.  Click **Create Web Service**. Render will automatically build and deploy your application.
+1.  First, ensure your `vite.config.ts` has the correct `base` path for your repository:
+    ```typescript
+    // vite.config.ts
+    export default {
+      base: '/your-repo-name/',
+    }
+    ```
+2.  Make sure all dependencies, including the deployment tool, are installed:
+    ```bash
+    npm install
+    ```
+3.  Run the deploy script from your terminal. This will build the application and push the contents of the `dist` folder to a `gh-pages` branch on your repository.
+    ```bash
+    npm run deploy
+    ```
+4.  In your GitHub repository, go to **Settings > Pages**.
+5.  Under "Build and deployment," set the **Source** to **Deploy from a branch**.
+6.  Set the branch to **`gh-pages`** and the folder to **`/ (root)`**. Click **Save**.
 
 ### :warning: Security Warning for Production
 
-This project's architecture for Render is secure, as the API key is stored as an environment variable on the backend and is never exposed to the client-side.
+Exposing an API key on the client-side (in your public JavaScript files) is a major security risk. When you run `npm run deploy`, Vite embeds the `VITE_API_KEY` from your local `.env` file directly into your public code.
 
-For added security, it is still recommended to enable API key restrictions in the Google Cloud Console to limit its usage to Render's domain or IP addresses if possible.
+For a public website, you must take steps to protect this key.
+
+-   **Minimum Security**: Go to the Google Cloud Console and add **API key restrictions**. Restrict the key so it can *only* be used from your specific GitHub Pages domain (`https://your-username.github.io`).
+-   **Best Practice**: For a production application, the proper solution is to create a backend server (a "proxy") that securely stores the key and makes API calls on behalf of the client.
