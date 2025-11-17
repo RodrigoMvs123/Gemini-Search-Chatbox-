@@ -86,11 +86,20 @@ This project can be easily deployed as a static site using GitHub Pages.
 
 ### Steps to Deploy
 
-1.  Push your code to a GitHub repository.
-2.  In your repository, go to **Settings > Pages**.
-3.  Under the "Build and deployment" section, select the source as **"Deploy from a branch"**.
-4.  Choose the branch you want to deploy from (usually `main`) and the folder as `/ (root)`.
-5.  Click **Save**. Your site will be built and deployed to a public URL.
+1.  First, ensure your `vite.config.ts` has the correct `base` path for your repository:
+    ```typescript
+    // vite.config.ts
+    export default {
+      base: '/your-repo-name/',
+    }
+    ```
+2.  Run the deploy script from your terminal. This will build the application and push the contents of the `dist` folder to a `gh-pages` branch on your repository.
+    ```bash
+    npm run deploy
+    ```
+3.  In your GitHub repository, go to **Settings > Pages**.
+4.  Under "Build and deployment," set the **Source** to **Deploy from a branch**.
+5.  Set the branch to **`gh-pages`** and the folder to **`/ (root)`**. Click **Save**.
 
 ### :warning: Security Warning for Production
 
