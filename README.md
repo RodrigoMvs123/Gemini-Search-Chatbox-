@@ -6,7 +6,8 @@ A responsive, stylish chatbot interface powered by the Gemini 2.5 Flash model wi
 
 ## Live Demo
 
-**(Link to be added after deployment to GitHub Pages)**
+**[(Link to be added after deployment to GitHub Pages)]** 
+**(https://rodrigomvs123.github.io/Gemini-Search-Chatbox-/)**
 
 ---
 
