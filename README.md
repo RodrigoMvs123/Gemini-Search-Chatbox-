@@ -38,18 +38,12 @@ To run this application on your local machine, follow these steps.
 
 ### Prerequisites
 
--   A modern web browser (Chrome, Firefox, Safari, etc.).
+-   [Node.js](https://nodejs.org/) (version 18 or higher is recommended) and npm.
 -   A text editor (like VS Code).
--   A local development environment that can serve the files and load environment variables (like the environment this project was developed in, or a local server setup like Vite).
 
-### Step 1: Clone the Repository
+### Step 1: Get the Code
 
-First, clone this repository to your local machine using Git:
-
-```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git
-cd YOUR_REPOSITORY_NAME
-```
+Clone the repository or download the source code into a local directory.
 
 ### Step 2: Get a Gemini API Key
 
@@ -60,22 +54,29 @@ cd YOUR_REPOSITORY_NAME
 
 ### Step 3: Configure the API Key
 
-This project uses a `.env` file to securely manage your API key. This file is ignored by Git, so your key will never be accidentally committed.
+This project uses a `.env` file to securely manage your API key for local development. This file is ignored by Git, so your key will not be committed.
 
-1.  In the root of the project, find the `.env.example` file.
-2.  Duplicate this file and rename the copy to `.env`.
-3.  Open the new `.env` file and replace `"YOUR_GEMINI_API_KEY_HERE"` with the actual API key you copied from Google AI Studio.
+For the Vite development server to expose the key to the application, it **must** be prefixed with `VITE_`.
 
-Your `.env` file should look like this:
-
-```
-# .env
-API_KEY="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
+1.  In the root of the project, create a file named `.env`.
+2.  Add the `VITE_API_KEY` variable and set its value to the key you copied from Google AI Studio. Your file should look like this:
+    ```dotenv
+    # .env
+    VITE_API_KEY="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    ```
 
 ### Step 4: Run the Application
 
-Open the `index.html` file in a development environment that supports loading environment variables. The application code is already configured to read the `API_KEY` from your `.env` file via `process.env.API_KEY`.
+1.  Open your terminal in the project's root directory.
+2.  Install the necessary packages by running:
+    ```bash
+    npm install
+    ```
+3.  Start the local development server:
+    ```bash
+    npm run dev
+    ```
+4.  Open the URL provided in the terminal (usually `http://localhost:5173`) in your browser to use the chatbox.
 
 ---
 

@@ -1,7 +1,13 @@
 import { GoogleGenAI } from "@google/genai";
 import { Message, GroundingSource } from '../types';
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const apiKey = import.meta.env.VITE_API_KEY;
+
+if (!apiKey) {
+  throw new Error("VITE_API_KEY is not set. Please add it to your .env file.");
+}
+
+const ai = new GoogleGenAI({ apiKey });
 
 interface GeminiResponse {
   text: string;
