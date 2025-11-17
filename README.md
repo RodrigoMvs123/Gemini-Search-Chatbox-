@@ -80,30 +80,25 @@ For the Vite development server to expose the key to the application, it **must*
 
 ---
 
-## Deployment to GitHub Pages
+## Deployment to Render
 
-This project can be easily deployed as a static site using GitHub Pages.
+This project is designed to be deployed on [Render](https://render.com/), which can host both the static frontend and the Node.js backend server.
 
 ### Steps to Deploy
 
-1.  First, ensure your `vite.config.ts` has the correct `base` path for your repository:
-    ```typescript
-    // vite.config.ts
-    export default {
-      base: '/your-repo-name/',
-    }
-    ```
-2.  Run the deploy script from your terminal. This will build the application and push the contents of the `dist` folder to a `gh-pages` branch on your repository.
-    ```bash
-    npm run deploy
-    ```
-3.  In your GitHub repository, go to **Settings > Pages**.
-4.  Under "Build and deployment," set the **Source** to **Deploy from a branch**.
-5.  Set the branch to **`gh-pages`** and the folder to **`/ (root)`**. Click **Save**.
+1.  Push your code to a GitHub repository.
+2.  Go to the Render Dashboard and create a new **Web Service**.
+3.  Connect the GitHub repository for this project.
+4.  Configure the service with the following settings:
+    -   **Build Command**: `npm install && npm run build`
+    -   **Start Command**: `npm start`
+5.  Go to the **Environment** tab and add a new Environment Variable:
+    -   **Key**: `GEMINI_API_KEY`
+    -   **Value**: Paste your actual Gemini API key here.
+6.  Click **Create Web Service**. Render will automatically build and deploy your application.
 
 ### :warning: Security Warning for Production
 
-Exposing an API key on the client-side (in your public JavaScript files) is a major security risk. For a public website like one hosted on GitHub Pages, you cannot use a `.env` file directly.
+This project's architecture for Render is secure, as the API key is stored as an environment variable on the backend and is never exposed to the client-side.
 
--   **For a production application**, you must **never** expose your API key. The proper solution is to create a backend server (a "proxy") that securely stores the key and makes API calls on behalf of the client.
--   As a partial mitigation for a hobby project, you can enable API key restrictions in the [Google Cloud Console](https://console.cloud.google.com/apis/credentials) to limit its usage to your specific website domain (`https://your-username.github.io`). This adds a layer of protection but is not a substitute for a proper backend implementation.
+For added security, it is still recommended to enable API key restrictions in the Google Cloud Console to limit its usage to Render's domain or IP addresses if possible.
