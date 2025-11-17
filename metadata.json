@@ -1,0 +1,5 @@
+{
+  "name": "Gemini Search Chatbox",
+  "description": "A responsive, stylish chatbot interface powered by the Gemini 2.5 Flash model with search grounding capabilities. It features local storage persistence, markdown rendering, and a clean, user-friendly design.",
+  "requestFramePermissions": []
+}
