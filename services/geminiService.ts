@@ -16,22 +16,26 @@ interface GeminiResponse {
 
 export const generateResponse = async (history: Message[], newMessage: string): Promise<GeminiResponse> => {
   try {
-    const model = ai.getGenerativeModel({ model: 'gemini-2.5-flash' });
-
-    const chat = model.startChat({
-      history: history.map(msg => ({
+    const contents = [
+      ...history.map(msg => ({
         role: msg.role,
         parts: [{ text: msg.text }]
       })),
-      generationConfig: {
-        tools: [{ googleSearch: {} }],
-      },
+      {
+        role: 'user',
+        parts: [{ text: newMessage }]
+      }
+    ];
+
+    const result = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents,
+      tools: [{ googleSearch: {} }]
     });
 
-    const result = await chat.sendMessage(newMessage);
-    const response = result.response;
-    const text = response.text();
-    const groundingChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
+    const response = result.candidates[0];
+    const text = response.content.parts[0].text;
+    const groundingChunks = response.groundingMetadata?.groundingChunks || [];
 
     const sources: GroundingSource[] = groundingChunks
       .map((chunk: any) => ({

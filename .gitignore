@@ -1,5 +1,16 @@
-# Ignore environment variables file
+# Environment variables
 .env
 
-# Ignore node_modules directory
-/node_modules
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
