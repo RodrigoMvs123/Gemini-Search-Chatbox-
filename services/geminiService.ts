@@ -31,7 +31,7 @@ export const generateResponse = async (history: Message[], newMessage: string): 
       model: 'gemini-2.5-flash',
       contents,
       tools: [{ googleSearch: {} }]
-    });
+    } as any);
 
     const response = result.candidates[0];
     const text = response.content.parts[0].text;
