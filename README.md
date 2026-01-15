@@ -6,8 +6,7 @@ A responsive, stylish chatbot interface powered by the Gemini 2.5 Flash model wi
 
 ## Live Demo
 
-**[(Link to be added after deployment to GitHub Pages)]** 
-**(https://rodrigomvs123.github.io/Gemini-Search-Chatbox-/)**
+**[https://gemini-search-chatbox.vercel.app/](https://gemini-search-chatbox.vercel.app/)**
 
 ---
 
@@ -81,36 +80,40 @@ For the Vite development server to expose the key to the application, it **must*
 
 ---
 
-## Deployment to GitHub Pages
+## Deployment to Vercel
 
-This project can be easily deployed as a static site using GitHub Pages.
+This project is deployed on Vercel for production.
 
 ### Steps to Deploy
 
-1.  First, ensure your `vite.config.ts` has the correct `base` path for your repository:
-    ```typescript
-    // vite.config.ts
-    export default {
-      base: '/your-repo-name/',
-    }
-    ```
-2.  Make sure all dependencies, including the deployment tool, are installed:
+1.  Install Vercel CLI:
     ```bash
-    npm install
+    npm install -g vercel
     ```
-3.  Run the deploy script from your terminal. This will build the application and push the contents of the `dist` folder to a `gh-pages` branch on your repository.
+2.  Login to Vercel:
     ```bash
-    npm run deploy
+    vercel login
     ```
-4.  In your GitHub repository, go to **Settings > Pages**.
-5.  Under "Build and deployment," set the **Source** to **Deploy from a branch**.
-6.  Set the branch to **`gh-pages`** and the folder to **`/ (root)`**. Click **Save**.
+3.  Deploy the project:
+    ```bash
+    vercel
+    ```
+4.  Add the API key as an environment variable in Vercel:
+    ```bash
+    vercel env add VITE_API_KEY
+    ```
+    Select Production, Preview, and Development environments, then paste your API key.
+
+5.  Deploy to production:
+    ```bash
+    vercel --prod
+    ```
 
 ### :warning: Security Warning for Production
 
-Exposing an API key on the client-side (in your public JavaScript files) is a major security risk. When you run `npm run deploy`, Vite embeds the `VITE_API_KEY` from your local `.env` file directly into your public code.
+Exposing an API key on the client-side (in your public JavaScript files) is a major security risk. The `VITE_API_KEY` environment variable gets embedded into your public code during build.
 
 For a public website, you must take steps to protect this key.
 
--   **Minimum Security**: Go to the Google Cloud Console and add **API key restrictions**. Restrict the key so it can *only* be used from your specific GitHub Pages domain (`https://your-username.github.io`).
+-   **Minimum Security**: Go to the Google Cloud Console and add **API key restrictions**. Restrict the key so it can *only* be used from your specific Vercel domain.
 -   **Best Practice**: For a production application, the proper solution is to create a backend server (a "proxy") that securely stores the key and makes API calls on behalf of the client.
